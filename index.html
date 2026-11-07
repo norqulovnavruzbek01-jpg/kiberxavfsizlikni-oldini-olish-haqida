@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CyberShield - Kiberxavfsizlik markazi</title>
+<style>
+  :root {
+    --primary: #0f766e;
+    --primary-dark: #115e59;
+    --accent: #f59e0b;
+    --danger: #dc2626;
+    --success: #16a34a;
+    --bg: #f1f5f9;
+    --card: #ffffff;
+    --text: #0f172a;
+    --muted: #64748b;
+    --border: #cbd5e1;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  header {
+    background: var(--primary);
+    color: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .logo { font-size: 1.5rem; font-weight: 700; }
+  .nav a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 18px;
+    font-weight: 500;
+  }
+  .nav a:hover { text-decoration: underline; }
+  .hero {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: #fff;
+    padding: 80px 20px;
+    text-align: center;
+  }
+  .hero h1 { font-size: 2.4rem; margin-bottom: 16px; }
+  .hero p { font-size: 1.1rem; max-width: 700px; margin: 0 auto 24px; opacity: 0.95; }
+  .btn {
+    display: inline-block;
+    padding: 12px 26px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: 0.2s;
+  }
+  .btn-accent { background: var(--accent); color: #111; }
+  .btn-accent:hover { filter: brightness(1.05); }
+  .btn-outline { background: transparent; color: #fff; border: 2px solid #fff; margin-left: 10px; }
+  .btn-outline:hover { background: #fff; color: var(--primary); }
+  section { padding: 60px 0; }
+  section h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 36px;
+    color: var(--primary-dark);
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 22px;
+  }
+  .card {
+    background: var(--card);
+    padding: 26px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    border: 1px solid var(--border);
+  }
+  .card .icon { font-size: 2rem; margin-bottom: 10px; }
+  .card h3 { margin-bottom: 10px; color: var(--primary-dark); }
+  .alt-bg { background: #e2e8f0; }
+  .tips { list-style: none; }
+  .tips li {
+    background: var(--card);
+    margin-bottom: 12px;
+    padding: 16px 20px;
+    border-left: 5px solid var(--primary);
+    border-radius: 6px;
+  }
+  .form-wrapper {
+    max-width: 520px;
+    margin: 0 auto;
+    background: var(--card);
+    padding: 34px;
+    border-radius: 14px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  }
+  .form-group { margin-bottom: 18px; }
+  label { display: block; font-weight: 600; margin-bottom: 6px; }
+  input {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 1rem;
+  }
+  input:focus { outline: 2px solid var(--primary); border-color: transparent; }
+  .error { color: var(--danger); font-size: 0.85rem; margin-top: 4px; min-height: 18px; }
+  .strength { height: 6px; border-radius: 4px; margin-top: 6px; background: #e2e8f0; overflow: hidden; }
+  .strength-bar { height: 100%; width: 0; border-radius: 4px; transition: 0.3s; }
+  .submit-btn { width: 100%; background: var(--primary); color: #fff; margin-top: 8px; }
+  .submit-btn:hover { background: var(--primary-dark); }
+  .divider {
+    text-align: center;
+    color: var(--muted);
+    margin: 22px 0;
+    position: relative;
+  }
+  .divider::before, .divider::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 42%;
+    height: 1px;
+    background: var(--border);
+  }
+  .divider::before { left: 0; }
+  .divider::after { right: 0; }
+  .social-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .social-btn {
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: #fff;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  .social-btn:hover { background: #f8fafc; }
+  .google-btn { grid-column: span 2; }
+  .message {
+    margin-top: 16px;
+    padding: 14px;
+    border-radius: 8px;
+    display: none;
+  }
+  .message.success { background: #dcfce7; color: var(--success); display: block; }
+  .message.info { background: #e0f2fe; color: #075985; display: block; }
+  .stats {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
+    text-align: center;
+  }
+  .stats div { flex: 1; min-width: 150px; }
+  .stats strong { font-size: 2rem; color: var(--primary); display: block; }
+  footer {
+    background: #0f172a;
+    color: #cbd5e1;
+    text-align: center;
+    padding: 28px 20px;
+    font-size: 0.95rem;
+  }
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 1.8rem; }
+    .btn-outline { margin: 10px 0 0; }
+    .nav a { margin-left: 12px; }
+    .social-btns { grid-template-columns: 1fr; }
+    .google-btn { grid-column: span 1; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container nav">
+    <div class="logo">🛡️ CyberShield</div>
+    <nav>
+      <a href="#home">Bosh sahifa</a>
+      <a href="#threats">Xavflar</a>
+      <a href="#tips">Maslahatlar</a>
+      <a href="#register">Ro'yxatdan o'tish</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" id="home">
+  <div class="container">
+    <h1>Kiberjinoyatlardan himoyalaning</h1>
+    <p>Shaxsiy ma'lumotlaringizni saqlang, akkauntlaringizni mustahkamlang va onlayn firibgarlikning oldini oling.</p>
+    <a href="#register" class="btn btn-accent">Hozir ro'yxatdan o'ting</a>
+    <a href="#tips" class="btn btn-outline">Maslahatlar</a>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="stats">
+      <div><strong>12+</strong>Tavsiya etilgan minimal parol uzunligi</div>
+      <div><strong>1 ta</strong>Har bir akkaunt uchun alohida parol</div>
+      <div><strong>2FA</strong>Ikki bosqichli tekshiruv himoyasi</div>
+    </div>
+  </div>
+</section>
+
+<section id="threats" class="alt-bg">
+  <div class="container">
+    <h2>Asosiy kiber xavflar</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="icon">🎣</div>
+        <h3>Fishing</h3>
+        <p>Soxta xabar yoki sahifalar orqali login va parolingizni o'g'irlash usuli.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🔑</div>
+        <h3>Zaif parollar</h3>
+        <p>Oddiy yoki takrorlanadigan parollar brute-force hujumlariga oson tushadi.</p>
+      </div>
+      <div class="card">
+        <div class="icon">📞</div>
+        <h3>Telefon firibgarligi</h3>
+        <p>"Bank xodimi" yoki "qarindosh" nomidan qo'ng'iroq qilib, kod so'rash.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🦠</div>
+        <h3>Zararli dasturlar</h3>
+        <p>Noma'lum ilova va fayllar orqali qurilmangizga kirish va ma'lumot o'g'irlash.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="tips">
+  <div class="container">
+    <h2>Xavfsizlik maslahatlari</h2>
+    <ul class="tips">
+      <li>Har bir akkaunt uchun kamida 12 belgili, noyob parol ishlating.</li>
+      <li>Ikki bosqichli tekshiruvni (2FA) barcha muhim akkauntlarda yoqing.</li>
+      <li>Hech kimga SMS yoki tasdiqlash kodini bermang, hatto "xodim" bo'lsa ham.</li>
+      <li>Ijtimoiy tarmoqlardagi shaxsiy ma'lumotlaringizni cheklang.</li>
+      <li>Havolalarni ochishdan oldin manzilni diqqat bilan tekshiring.</li>
+      <li>Muhim ma'lumotlarni muntazam zaxiralang.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="register" class="alt-bg">
+  <div class="container">
+    <h2>Ro'yxatdan o'tish</h2>
+    <div class="form-wrapper">
+      <form id="regForm" novalidate>
+        <div class="form-group">
+          <label for="firstName">Ism</label>
+          <input type="text" id="firstName" placeholder="Masalan: Navruzbek" autocomplete="given-name">
+          <div class="error" id="firstNameErr"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="lastName">Familiya</label>
+          <input type="text" id="lastName" placeholder="Masalan: Norqulov" autocomplete="family-name">
+          <div class="error" id="lastNameErr"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Telefon raqam</label>
+          <input type="tel" id="phone" placeholder="+998901234567" autocomplete="tel">
+          <div class="error" id="phoneErr"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email (Google akkaunt)</label>
+          <input type="email" id="email" placeholder="ism@gmail.com" autocomplete="email">
+          <div class="error" id="emailErr"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Parol</label>
+          <input type="password" id="password" placeholder="Kamida 8 belgi" autocomplete="new-password">
+          <div class="strength"><div class="strength-bar" id="strengthBar"></div></div>
+          <div class="error" id="passwordErr"></div>
+        </div>
+
+        <button type="submit" class="btn submit-btn">Ro'yxatdan o'tish</button>
+      </form>
+
+      <div class="divider">yoki</div>
+
+      <div class="social-btns">
+        <button type="button" class="social-btn google-btn" id="googleBtn">🔵 Google bilan kirish</button>
+        <button type="button" class="social-btn" data-social="Telegram">✈️ Telegram</button>
+        <button type="button" class="social-btn" data-social="Instagram">📷 Instagram</button>
+        <button type="button" class="social-btn" data-social="Facebook">📘 Facebook</button>
+        <button type="button" class="social-btn" data-social="YouTube">▶️ YouTube</button>
+      </div>
+
+      <div class="message" id="msg"></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>© 2026 CyberShield. Barcha huquqlar himoyalangan.</p>
+    <p>Dizayn va kod muallifi: <strong>Norqulov Navruzbek</strong></p>
+  </div>
+</footer>
+
+<script>
+  // Google Cloud Console'dan olingan OAuth Client ID shu yerga yoziladi
+  const GOOGLE_CLIENT_ID = "";
+
+  const form = document.getElementById("regForm");
+  const msg = document.getElementById("msg");
+  const strengthBar = document.getElementById("strengthBar");
+
+  function showMessage(text, type) {
+    msg.textContent = text;
+    msg.className = "message " + type;
+  }
+
+  function setError(id, text) {
+    document.getElementById(id + "Err").textContent = text;
+  }
+
+  function clearErrors() {
+    ["firstName", "lastName", "phone", "email", "password"].forEach(id => setError(id, ""));
+  }
+
+  function checkPasswordStrength(pw) {
+    let score = 0;
+    if (pw.length >= 8) score++;
+    if (pw.length >= 12) score++;
+    if (/[A-Z]/.test(pw) && /[a-z]/.test(pw)) score++;
+    if (/\d/.test(pw)) score++;
+    if (/[^A-Za-z0-9]/.test(pw)) score++;
+    const levels = [
+      { w: "0%", c: "transparent" },
+      { w: "25%", c: "#dc2626" },
+      { w: "45%", c: "#f97316" },
+      { w: "65%", c: "#eab308" },
+      { w: "85%", c: "#84cc16" },
+      { w: "100%", c: "#16a34a" }
+    ];
+    strengthBar.style.width = levels[score].w;
+    strengthBar.style.background = levels[score].c;
+    return score;
+  }
+
+  document.getElementById("password").addEventListener("input", e => {
+    checkPasswordStrength(e.target.value);
+  });
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    clearErrors();
+    msg.className = "message";
+
+    const firstName = document.getElementById("firstName").value.trim();
+    const lastName = document.getElementById("lastName").value.trim();
+    const phone = document.getElementById("phone").value.trim().replace(/[\s-]/g, "");
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+
+    let valid = true;
+
+    if (firstName.length < 2) { setError("firstName", "Ism kamida 2 harfdan iborat bo'lishi kerak"); valid = false; }
+    if (lastName.length < 2) { setError("lastName", "Familiya kamida 2 harfdan iborat bo'lishi kerak"); valid = false; }
+
+    if (!/^\+998\d{9}$/.test(phone)) {
+      setError("phone", "Telefon formati: +998901234567");
+      valid = false;
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setError("email", "To'g'ri email kiriting");
+      valid = false;
+    }
+
+    if (password.length < 8) {
+      setError("password", "Parol kamida 8 belgidan iborat bo'lishi kerak");
+      valid = false;
+    } else if (checkPasswordStrength(password) < 3) {
+      setError("password", "Parol juda oddiy. Katta/kichik harf, raqam yoki belgi qo'shing");
+      valid = false;
+    }
+
+    if (!valid) {
+      showMessage("Iltimos, xatolarni to'g'rilang.", "info");
+      return;
+    }
+
+    // Demo rejim: ma'lumotlar serverga yuborilmaydi va saqlanmaydi
+    form.reset();
+    strengthBar.style.width = "0%";
+    strengthBar.style.background = "transparent";
+    showMessage("Ro'yxatdan o'tish muvaffaqiyatli (demo rejim). Parolingizni hech kimga bermang!", "success");
+  });
+
+  document.getElementById("googleBtn").addEventListener("click", function () {
+    if (!GOOGLE_CLIENT_ID) {
+      showMessage("Google bilan kirish uchun Google Cloud'dan Client ID olib, kodda GOOGLE_CLIENT_ID ga yozing.", "info");
+      return;
+    }
+    showMessage("Google autentifikatsiyasi sozlangan. Google Identity Services bilan ulash kerak.", "info");
+  });
+
+  document.querySelectorAll("[data-social]").forEach(btn => {
+    btn.addEventListener("click", function () {
+      const name = this.getAttribute("data-social");
+      showMessage(name + " bilan ulash demo rejimda. Haqiqiy ulash uchun rasmiy API kaliti kerak.", "info");
+    });
+  });
+</script>
+
+</body>
+</html>
